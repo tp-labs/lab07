@@ -19,8 +19,11 @@ $ export GITHUB_USERNAME=<имя_пользователя>
 ```
 
 ```bash
-$ curl https://github.com/${GITHUB_USERNAME}/lab9/archive/v0.1.0.0.tar.gz
-$ export PRINT_SHA1=`openssl sha1 v0.1.0.0.tar.gz`
+$ export PACKAGE_OS=`uname -s` PACKAGE_ARCH=`uname -m` 
+$ export PACKAGE_FILENAME=print-${PACKAGE_OS}-${PACKAGE_ARCH}.tar.gz
+$ wget https://github.com/${GITHUB_USERNAME}/lab9/archive/v0.1.0.0.tar.gz
+$ export PRINT_SHA1=`openssl sha1 v0.1.0.0.tar.gz | cut -d'=' -f2 | cut -c2-41`
+$ echo $PRINT_SHA1
 ```
 
 ```bash
@@ -36,11 +39,11 @@ include(hunter_pick_scheme)
 
 hunter_add_version(
     PACKAGE_NAME
-    puffin-buffer
+    print
     VERSION
     "0.1.0.0"
     URL
-    "https://github.com/${GITHUB_USERNAME}/print/archive/v0.1.0.0.tar.gz"
+    "https://github.com/${GITHUB_USERNAME}/lab9/archive/v0.1.0.0.tar.gz"
     SHA1
     ${PRINT_SHA1}
 )
@@ -53,8 +56,8 @@ hunter_cmake_args(
     BUILD_EXAMPLES=NO
     BUILD_TESTS=NO
 )
-hunter_cacheable(puffin-buffer)
-hunter_download(PACKAGE_NAME puffin-buffer)
+hunter_cacheable(print)
+hunter_download(PACKAGE_NAME print)
 EOF
 $ cat >> configs/default.cmake <<EOF
 hunter_config(print VERSION 0.1.0.0)
@@ -63,8 +66,10 @@ $ cd ../..
 ```
 
 ```bash
-$ env HUNTER_ROOT `pwd`/hunter
-$ git clone https://github.com/${GITHUB_USERNAME}/lab10
+$ export HUNTER_ROOT=`pwd`/hunter
+$ mkdir lab10 && cd lab10
+$ git init
+$ git remote add origin https://github.com/${GITHUB_USERNAME}/lab10
 $ cd lab10
 ```
 
@@ -75,41 +80,53 @@ $ cat > sources/demo.cpp <<EOF
 
 int main(int argc, char** argv) {
 	std::string text;
-	while(cin >> text) {
-		std::ofstream out("log.txt");
+	while(std::cin >> text) {
+		std::ofstream out("log.txt", std::ios_base:app);
 		print(text, out);
+		out << std::endl;
 	}
 }
 EOF
-$ mkdir cmake
-$ curl https://...hunter/gate -o cmake/HunterGate.cmake
 ```
 
 ```bash
+$ wget https://github.com/hunter-packages/gate/archive/v0.8.1.tar.gz 
+$ tar -xzvf v0.8.1.tar.gz gate-0.8.1/cmake/HunterGate.cmake
+$ mkdir cmake
+$ mv gate-0.8.1/cmake/HunterGate.cmake cmake
+$ rm -rf gate*/
+$ rm *.tar.gz
+```
+
+```bash
+$ cat > CMakeLists.txt <<EOF
 cmake_minimum_required(VERSION 3.0)
 
 set(CMAKE_CXX_STANDARD 11)
-set(CMAKE_CXX_STANDARD_REQUIRED ON)
+EOF
 ```
 
 ```bash
 $ cat >> CMakeLists.txt <<EOF
+
 include(cmake/HunterGate.cmake)
 
 HunterGate(
     URL "https://github.com/ruslo/hunter/archive/v0.7.0.tar.gz"
     SHA1 "e730118c7ec65126398f8d4f09daf9366791ede0"
 )
+EOF
 ```
 
 ```bash
 $ cat >> CMakeLists.txt <<EOF
+
 project(demo)
 
 hunter_add_package(print)
 find_package(print)
 
-add_executable(demo ${CMAKE_CURRENT_SOURCE_DIR}/sources/demo.cpp)
+add_executable(demo \${CMAKE_CURRENT_SOURCE_DIR}/sources/demo.cpp)
 target_link_libraries(demo print)
 
 install(TARGETS demo RUNTIME DESTINATION bin)
@@ -117,17 +134,25 @@ EOF
 ```
 
 ```bash
-$ cmake -H. -B_build -DCMAKE_INSTALL_PREFIX=_install
-$ cmake --build _build --target install
-$ mkdir artifacts && cd artifacts
-$ ../_install/demo << "text1 text2 text3"
-$ cat log.txt
+$ cat >> .gitignore <<EOF
+*build*/
+*install*/
+*.swp
+EOF
 ```
 
 ```bash
-$ git add artifacts
-$ git commit -m"added doxygen.conf"
+$ git add .
+$ git commit -m"first commit"
 $ git push origin master
+```
+
+```bash
+$ cmake -H. -B_build -DCMAKE_INSTALL_PREFIX=_install
+$ cmake --build _build --target install
+$ mkdir artifacts && cd artifacts
+$ echo "text1 text2 text3" | ../_install/bin/demo
+$ cat log.txt
 ```
 
 ## Links
