@@ -134,10 +134,27 @@ EOF
 ```
 
 ```bash
-$ cat >> .gitignore <<EOF
+$ cat > .gitignore <<EOF
 *build*/
 *install*/
 *.swp
+EOF
+```
+
+```bash
+$ cat > README.md <<EOF
+[![Build Status](https://travis-ci.org/${GITHUB_USERNAME}/lab10.svg?branch=master)](https://travis-ci.org/rusdevops/lab10)
+the demo application redirects data from stdin to a file **log.txt** using a package **print**.
+EOF
+```
+
+```bash
+$ cat > .travis.yml <<EOF
+language: cpp
+
+script:   
+- cmake -H. -B_build
+- cmake --build _build
 EOF
 ```
 
