@@ -28,7 +28,8 @@ $ echo $PRINT_SHA1
 
 ```bash
 $ git clone https://github.com/ruslo/hunter hunter
-$ cd hunter && cd cmake
+$ cd hunter && git checkout v0.18.57
+$ cd cmake
 $ mkdir projects/print
 $ cat > projects/print/hunter.cmake <<EOF
 include(hunter_add_version)
@@ -70,7 +71,6 @@ $ export HUNTER_ROOT=`pwd`/hunter
 $ mkdir lab10 && cd lab10
 $ git init
 $ git remote add origin https://github.com/${GITHUB_USERNAME}/lab10
-$ cd lab10
 ```
 
 ```bash
@@ -81,7 +81,7 @@ $ cat > sources/demo.cpp <<EOF
 int main(int argc, char** argv) {
 	std::string text;
 	while(std::cin >> text) {
-		std::ofstream out("log.txt", std::ios_base:app);
+		std::ofstream out("log.txt", std::ios_base::app);
 		print(text, out);
 		out << std::endl;
 	}
