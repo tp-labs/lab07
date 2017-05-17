@@ -160,9 +160,18 @@ EOF
 ```
 
 ```bash
+$ travis lint
+```
+
+```bash
 $ git add .
 $ git commit -m"first commit"
 $ git push origin master
+```
+
+```bash
+$ travis login --auto
+$ travis enable
 ```
 
 ```bash
