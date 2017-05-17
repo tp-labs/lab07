@@ -22,7 +22,7 @@ $ export GITHUB_USERNAME=<имя_пользователя>
 ```bash
 $ export PACKAGE_OS=`uname -s` PACKAGE_ARCH=`uname -m` 
 $ export PACKAGE_FILENAME=print-${PACKAGE_OS}-${PACKAGE_ARCH}.tar.gz
-$ wget https://github.com/${GITHUB_USERNAME}/lab9/archive/v0.1.0.0.tar.gz
+$ wget https://github.com/${GITHUB_USERNAME}/lab09/archive/v0.1.0.0.tar.gz
 $ export PRINT_SHA1=`openssl sha1 v0.1.0.0.tar.gz | cut -d'=' -f2 | cut -c2-41`
 $ echo $PRINT_SHA1
 ```
@@ -45,7 +45,7 @@ hunter_add_version(
     VERSION
     "0.1.0.0"
     URL
-    "https://github.com/${GITHUB_USERNAME}/lab9/archive/v0.1.0.0.tar.gz"
+    "https://github.com/${GITHUB_USERNAME}/lab09/archive/v0.1.0.0.tar.gz"
     SHA1
     ${PRINT_SHA1}
 )
@@ -180,6 +180,19 @@ $ cmake --build _build --target install
 $ mkdir artifacts && cd artifacts
 $ echo "text1 text2 text3" | ../_install/bin/demo
 $ cat log.txt
+```
+
+## Report
+
+```bash
+$ cd ~/workspace/labs/
+$ export LAB_NUMBER=10
+$ git clone https://github.com/tp-labs/lab${LAB_NUMBER} tasks/lab${LAB_NUMBER}
+$ mkdir reports/lab${LAB_NUMBER}
+$ cp tasks/lab${LAB_NUMBER}/README.md reports/lab${LAB_NUMBER}/REPORT.md
+$ cd reports/lab${LAB_NUMBER}
+$ edit REPORT.md
+$ gistup -m"lab${LAB_NUMBER}"
 ```
 
 ## Links
