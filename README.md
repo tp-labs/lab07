@@ -11,6 +11,7 @@ $ open https://github.com/ruslo/hunter
 - [ ] 1. Создать публичный репозиторий с названием **lab10** на сервисе **GitHub**
 - [ ] 2. Выполнить инструкцию учебного материала
 - [ ] 3. Ознакомиться со ссылками учебного материала
+- [ ] 4. Составить отчет и отправить ссылку личным сообщением в **Slack**
 
 ## Tutorial
 
@@ -143,7 +144,7 @@ EOF
 
 ```bash
 $ cat > README.md <<EOF
-[![Build Status](https://travis-ci.org/${GITHUB_USERNAME}/lab10.svg?branch=master)](https://travis-ci.org/rusdevops/lab10)
+[![Build Status](https://travis-ci.org/${GITHUB_USERNAME}/lab10.svg?branch=master)](https://travis-ci.org/${GITHUB_USERNAME}/lab10)
 the demo application redirects data from stdin to a file **log.txt** using a package **print**.
 EOF
 ```
@@ -176,3 +177,7 @@ $ cat log.txt
 
 - [polly](https://github.com/ruslo/polly)
 - [conan](https://conan.io)
+
+```
+Copyright (c) 2017 Vyacheslav Vershinin
+```
