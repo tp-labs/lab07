@@ -201,5 +201,5 @@ $ gistup -m"lab${LAB_NUMBER}"
 - [conan](https://conan.io)
 
 ```
-Copyright (c) 2017 Vyacheslav Vershinin
+Copyright (c) 2017 Братья Вершинины
 ```
