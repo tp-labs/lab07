@@ -2,7 +2,7 @@
 
 Данная лабораторная работа посвещена изучению систем управления пакетами на примере **Hunter**
 
-```bash
+```ShellSession
 $ open https://github.com/ruslo/hunter
 ```
 
@@ -15,17 +15,17 @@ $ open https://github.com/ruslo/hunter
 
 ## Tutorial
 
-```bash
+```ShellSession
 $ export GITHUB_USERNAME=<имя_пользователя>
 ```
 
-```bash
+```ShellSession
 $ wget https://github.com/${GITHUB_USERNAME}/lab09/archive/v0.1.0.0.tar.gz
 $ export PRINT_SHA1=`openssl sha1 v0.1.0.0.tar.gz | cut -d'=' -f2 | cut -c2-41`
 $ echo $PRINT_SHA1
 ```
 
-```bash
+```ShellSession
 $ git clone https://github.com/ruslo/hunter hunter
 $ cd hunter && git checkout v0.18.57
 $ cd cmake
@@ -65,14 +65,14 @@ EOF
 $ cd ../..
 ```
 
-```bash
+```ShellSession
 $ export HUNTER_ROOT=`pwd`/hunter
 $ mkdir lab10 && cd lab10
 $ git init
 $ git remote add origin https://github.com/${GITHUB_USERNAME}/lab10
 ```
 
-```bash
+```ShellSession
 $ mkdir sources
 $ cat > sources/demo.cpp <<EOF
 #include <print.hpp>
@@ -88,7 +88,7 @@ int main(int argc, char** argv) {
 EOF
 ```
 
-```bash
+```ShellSession
 $ wget https://github.com/hunter-packages/gate/archive/v0.8.1.tar.gz 
 $ tar -xzvf v0.8.1.tar.gz gate-0.8.1/cmake/HunterGate.cmake
 $ mkdir cmake
@@ -97,7 +97,7 @@ $ rm -rf gate*/
 $ rm *.tar.gz
 ```
 
-```bash
+```ShellSession
 $ cat > CMakeLists.txt <<EOF
 cmake_minimum_required(VERSION 3.0)
 
@@ -105,7 +105,7 @@ set(CMAKE_CXX_STANDARD 11)
 EOF
 ```
 
-```bash
+```ShellSession
 $ cat >> CMakeLists.txt <<EOF
 
 include(cmake/HunterGate.cmake)
@@ -117,7 +117,7 @@ HunterGate(
 EOF
 ```
 
-```bash
+```ShellSession
 $ cat >> CMakeLists.txt <<EOF
 
 project(demo)
@@ -132,7 +132,7 @@ install(TARGETS demo RUNTIME DESTINATION bin)
 EOF
 ```
 
-```bash
+```ShellSession
 $ cat > .gitignore <<EOF
 *build*/
 *install*/
@@ -140,14 +140,14 @@ $ cat > .gitignore <<EOF
 EOF
 ```
 
-```bash
+```ShellSession
 $ cat > README.md <<EOF
 [![Build Status](https://travis-ci.org/${GITHUB_USERNAME}/lab10.svg?branch=master)](https://travis-ci.org/${GITHUB_USERNAME}/lab10)
 the demo application redirects data from stdin to a file **log.txt** using a package **print**.
 EOF
 ```
 
-```bash
+```ShellSession
 $ cat > .travis.yml <<EOF
 language: cpp
 
@@ -157,22 +157,22 @@ script:
 EOF
 ```
 
-```bash
+```ShellSession
 $ travis lint
 ```
 
-```bash
+```ShellSession
 $ git add .
 $ git commit -m"first commit"
 $ git push origin master
 ```
 
-```bash
+```ShellSession
 $ travis login --auto
 $ travis enable
 ```
 
-```bash
+```ShellSession
 $ cmake -H. -B_build -DCMAKE_INSTALL_PREFIX=_install
 $ cmake --build _build --target install
 $ mkdir artifacts && cd artifacts
@@ -182,7 +182,7 @@ $ cat log.txt
 
 ## Report
 
-```bash
+```ShellSession
 $ cd ~/workspace/labs/
 $ export LAB_NUMBER=10
 $ git clone https://github.com/tp-labs/lab${LAB_NUMBER} tasks/lab${LAB_NUMBER}
