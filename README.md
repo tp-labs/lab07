@@ -9,14 +9,27 @@ $ open https://github.com/ruslo/hunter
 ## Tasks
 
 - [ ] 1. Создать публичный репозиторий с названием **lab10** на сервисе **GitHub**
-- [ ] 2. Выполнить инструкцию учебного материала
-- [ ] 3. Ознакомиться со ссылками учебного материала
-- [ ] 4. Составить отчет и отправить ссылку личным сообщением в **Slack**
+- [ ] 2. Сгенирировать токен для доступа к сервису **GitHub** с правами **repo**
+- [ ] 3. Выполнить инструкцию учебного материала
+- [ ] 4. Ознакомиться со ссылками учебного материала
+- [ ] 5. Составить отчет и отправить ссылку личным сообщением в **Slack**
 
 ## Tutorial
 
 ```ShellSession
 $ export GITHUB_USERNAME=<имя_пользователя>
+$ export GITHUB_TOKEN=<сгенирированный_токен>
+```
+
+```ShellSession
+mkdir ~/.config
+cat > ~/.config/hub <<EOF
+github.com:
+- user: ${GITHUB_USERNAME}
+  oauth_token: ${GITHUB_TOKEN}
+  protocol: https
+EOF
+$ git config --global hub.protocol https
 ```
 
 ```ShellSession
@@ -27,10 +40,16 @@ $ echo $PRINT_SHA1
 
 ```ShellSession
 $ git clone https://github.com/ruslo/hunter hunter
-$ cd hunter && git checkout v0.18.57
-$ cd cmake
-$ mkdir projects/print
-$ cat > projects/print/hunter.cmake <<EOF
+$ cd hunter && git checkout v0.19.119
+$ git remote show
+$ hub fork
+$ git remote show
+$ git remote show ${GITHUB_USERNAME}
+```
+
+```ShellSession
+$ mkdir cmake/projects/print
+$ cat > cmake/projects/print/hunter.cmake <<EOF
 include(hunter_add_version)
 include(hunter_cacheable)
 include(hunter_cmake_args)
@@ -59,10 +78,21 @@ hunter_cmake_args(
 hunter_cacheable(print)
 hunter_download(PACKAGE_NAME print)
 EOF
-$ cat >> configs/default.cmake <<EOF
+```
+
+```ShellSession
+$ cat >> cmake/configs/default.cmake <<EOF
 hunter_config(print VERSION 0.1.0.0)
 EOF
-$ cd ../..
+
+```
+
+```ShellSession
+$ git add .
+$ git commit -m"added print package"
+$ git tag v0.19.119.1
+$ git push ${GIHUB_USERNAME} --all
+$ cd ..
 ```
 
 ```ShellSession
@@ -105,14 +135,21 @@ set(CMAKE_CXX_STANDARD 11)
 EOF
 ```
 
+```
+$ wget https://github.com/${GITHUB_USERNAME}/hunter/archive/v0.19.119.1.tar.gz
+$ export HUNTER_SHA1=`openssl sha1 v0.19.119.1.tar.gz | cut -d'=' -f2 | cut -c2-41`
+$ echo $HUNTER_SHA1
+$ rm -rf v0.19.119.1.tar.gz
+```
+
 ```ShellSession
 $ cat >> CMakeLists.txt <<EOF
 
 include(cmake/HunterGate.cmake)
 
 HunterGate(
-    URL "https://github.com/ruslo/hunter/archive/v0.7.0.tar.gz"
-    SHA1 "e730118c7ec65126398f8d4f09daf9366791ede0"
+    URL "https://github.com/${GITHUB_USERNAME}/hunter/archive/v0.19.119.1.tar.gz"
+    SHA1 "${HUNTER_SHA1}"
 )
 EOF
 ```
@@ -195,6 +232,7 @@ $ gistup -m "lab${LAB_NUMBER}"
 
 ## Links
 
+- [hub](https://hub.github.com/)
 - [polly](https://github.com/ruslo/polly)
 - [conan](https://conan.io)
 
