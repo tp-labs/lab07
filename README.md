@@ -22,8 +22,8 @@ $ export GITHUB_TOKEN=<сгенирированный_токен>
 ```
 
 ```ShellSession
-mkdir ~/.config
-cat > ~/.config/hub <<EOF
+$ mkdir ~/.config
+$ cat > ~/.config/hub <<EOF
 github.com:
 - user: ${GITHUB_USERNAME}
   oauth_token: ${GITHUB_TOKEN}
