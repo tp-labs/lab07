@@ -22,6 +22,13 @@ $ export GITHUB_TOKEN=<сгенирированный_токен>
 ```
 
 ```ShellSession
+$ cd ${GITHUB_USERNAME}/workspace
+$ pushd .
+$ source scripts/activate
+$ go get github.com/github/hub
+```
+
+```ShellSession
 $ mkdir ~/.config
 $ cat > ~/.config/hub <<EOF
 github.com:
@@ -36,11 +43,12 @@ $ git config --global hub.protocol https
 $ wget https://github.com/${GITHUB_USERNAME}/lab09/archive/v0.1.0.0.tar.gz
 $ export PRINT_SHA1=`openssl sha1 v0.1.0.0.tar.gz | cut -d'=' -f2 | cut -c2-41`
 $ echo $PRINT_SHA1
+$ rm -rf v0.1.0.0.tar.gz
 ```
 
 ```ShellSession
-$ git clone https://github.com/ruslo/hunter hunter
-$ cd hunter && git checkout v0.19.119
+$ git clone https://github.com/ruslo/hunter projects/hunter
+$ cd projects/hunter && git checkout v0.19.137
 $ git remote show
 $ hub fork
 $ git remote show
@@ -90,9 +98,9 @@ EOF
 ```ShellSession
 $ git add .
 $ git commit -m"added print package"
-$ git push ${GIHUB_USERNAME}
-$ git tag v0.19.119.1
-$ git push ${GIHUB_USERNAME} --tags
+$ git push ${GIHUB_USERNAME} master
+$ git tag v0.19.137.1
+$ git push ${GIHUB_USERNAME} master --tags
 $ cd ..
 ```
 
@@ -137,10 +145,10 @@ EOF
 ```
 
 ```
-$ wget https://github.com/${GITHUB_USERNAME}/hunter/archive/v0.19.119.1.tar.gz
+$ wget https://github.com/${GITHUB_USERNAME}/hunter/archive/v0.19.137.1.tar.gz
 $ export HUNTER_SHA1=`openssl sha1 v0.19.119.1.tar.gz | cut -d'=' -f2 | cut -c2-41`
 $ echo $HUNTER_SHA1
-$ rm -rf v0.19.119.1.tar.gz
+$ rm -rf v0.19.137.1.tar.gz
 ```
 
 ```ShellSession
@@ -149,7 +157,7 @@ $ cat >> CMakeLists.txt <<EOF
 include(cmake/HunterGate.cmake)
 
 HunterGate(
-    URL "https://github.com/${GITHUB_USERNAME}/hunter/archive/v0.19.119.1.tar.gz"
+    URL "https://github.com/${GITHUB_USERNAME}/hunter/archive/v0.19.137.1.tar.gz"
     SHA1 "${HUNTER_SHA1}"
 )
 EOF
@@ -221,7 +229,7 @@ $ cat log.txt
 ## Report
 
 ```ShellSession
-$ cd ~/workspace/labs/
+$ popd
 $ export LAB_NUMBER=10
 $ git clone https://github.com/tp-labs/lab${LAB_NUMBER} tasks/lab${LAB_NUMBER}
 $ mkdir reports/lab${LAB_NUMBER}
