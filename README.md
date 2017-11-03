@@ -144,7 +144,7 @@ set(CMAKE_CXX_STANDARD 11)
 EOF
 ```
 
-```
+```ShellSession
 $ wget https://github.com/${GITHUB_USERNAME}/hunter/archive/v0.19.137.1.tar.gz
 $ export HUNTER_SHA1=`openssl sha1 v0.19.137.1.tar.gz | cut -d'=' -f2 | cut -c2-41`
 $ echo $HUNTER_SHA1
