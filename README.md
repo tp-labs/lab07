@@ -19,6 +19,7 @@ $ open https://github.com/ruslo/hunter
 ```ShellSession
 $ export GITHUB_USERNAME=<имя_пользователя>
 $ export GITHUB_TOKEN=<сгенирированный_токен>
+$ export HUNTER_VERSION=<версия_пакетного_менеджера>
 ```
 
 ```ShellSession
@@ -48,7 +49,7 @@ $ rm -rf v0.1.0.0.tar.gz
 
 ```ShellSession
 $ git clone https://github.com/ruslo/hunter projects/hunter
-$ cd projects/hunter && git checkout v0.19.137
+$ cd projects/hunter && git checkout ${HUNTER_VERSION}
 $ git remote show
 $ hub fork
 $ git remote show
@@ -99,7 +100,7 @@ EOF
 $ git add .
 $ git commit -m"added print package"
 $ git push ${GIHUB_USERNAME} master
-$ git tag v0.19.137.1
+$ git tag ${HUNTER_VERSION}.1
 $ git push ${GIHUB_USERNAME} master --tags
 $ cd ..
 ```
@@ -145,10 +146,10 @@ EOF
 ```
 
 ```ShellSession
-$ wget https://github.com/${GITHUB_USERNAME}/hunter/archive/v0.19.137.1.tar.gz
-$ export HUNTER_SHA1=`openssl sha1 v0.19.137.1.tar.gz | cut -d'=' -f2 | cut -c2-41`
-$ echo $HUNTER_SHA1
-$ rm -rf v0.19.137.1.tar.gz
+$ wget https://github.com/${GITHUB_USERNAME}/hunter/archive/${HUNTER_VERSION}.1.tar.gz
+$ export HUNTER_SHA1=`openssl sha1 ${HUNTER_VERSION}.1.tar.gz | cut -d'=' -f2 | cut -c2-41`
+$ echo ${HUNTER_SHA1}
+$ rm -rf ${HUNTER_VERSION}.1.tar.gz
 ```
 
 ```ShellSession
@@ -157,7 +158,7 @@ $ cat >> CMakeLists.txt <<EOF
 include(cmake/HunterGate.cmake)
 
 HunterGate(
-    URL "https://github.com/${GITHUB_USERNAME}/hunter/archive/v0.19.137.1.tar.gz"
+    URL "https://github.com/${GITHUB_USERNAME}/hunter/archive/${HUNTER_VERSION}.1.tar.gz"
     SHA1 "${HUNTER_SHA1}"
 )
 EOF
