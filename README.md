@@ -50,6 +50,7 @@ $ rm -rf v0.1.0.0.tar.gz
 ```ShellSession
 $ git clone https://github.com/ruslo/hunter projects/hunter
 $ cd projects/hunter && git checkout ${HUNTER_VERSION}
+$ git checkout -b package_print
 $ git remote show
 $ hub fork
 $ git remote show
@@ -99,9 +100,9 @@ EOF
 ```ShellSession
 $ git add .
 $ git commit -m"added print package"
-$ git push ${GIHUB_USERNAME} master
+$ git push ${GIHUB_USERNAME} package_print
 $ git tag ${HUNTER_VERSION}.1
-$ git push ${GIHUB_USERNAME} master --tags
+$ git push ${GIHUB_USERNAME} package_print --tags
 $ cd ..
 ```
 
