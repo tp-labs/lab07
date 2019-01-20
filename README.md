@@ -189,7 +189,7 @@ EOF
 $ cat > .travis.yml <<EOF
 language: cpp
 
-script:   
+script:
 - cmake -H. -B_build
 - cmake --build _build
 EOF
