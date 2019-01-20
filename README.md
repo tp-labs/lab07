@@ -110,7 +110,7 @@ int main(int argc, char* argv[])
   const char* log_path = std::getenv("LOG_PATH");
   if (log_path == nullptr)
   {
-    std::cerr << "undefined environment variable: LOG_PATH" << std::endl; 
+    std::cerr << "undefined environment variable: LOG_PATH" << std::endl;
   }
   std::string text;
   while(std::cin >> text)
@@ -124,12 +124,8 @@ EOF
 ```
 
 ```ShellSession
-$ wget https://github.com/hunter-packages/gate/archive/v0.8.1.tar.gz 
-$ tar -xzvf v0.8.1.tar.gz gate-0.8.1/cmake/HunterGate.cmake
-$ mkdir cmake
-$ mv gate-0.8.1/cmake/HunterGate.cmake cmake
-$ rm -rf gate*/
-$ rm *.tar.gz
+$ mkdir tools
+$ git submodule add https://github.com/hunter-packages/gate tools/gate
 ```
 
 ```ShellSession
@@ -150,7 +146,7 @@ $ rm -rf ${HUNTER_VERSION}.1.tar.gz
 ```ShellSession
 $ cat >> CMakeLists.txt <<EOF
 
-include(cmake/HunterGate.cmake)
+include(tools/gate/cmake/HunterGate.cmake)
 
 huntergate(
     URL "https://github.com/${GITHUB_USERNAME}/hunter/archive/${HUNTER_VERSION}.1.tar.gz"
