@@ -77,7 +77,7 @@ EOF
 
 ```ShellSession
 $ cat >> cmake/configs/default.cmake <<EOF
-hunter_config(print VERSION 0.1.0.0)
+hunter_default_version(print VERSION 0.1.0.0)
 EOF
 
 ```
