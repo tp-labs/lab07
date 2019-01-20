@@ -214,6 +214,7 @@ $ travis enable
 $ cmake -H. -B_build -DCMAKE_INSTALL_PREFIX=_install
 $ cmake --build _build --target install
 $ mkdir artifacts && cd artifacts
+$ export LOG_PATH=log.txt
 $ echo "text1 text2 text3" | ../_install/bin/demo
 $ cat log.txt
 ```
