@@ -9,16 +9,14 @@ $ open https://github.com/ruslo/hunter
 ## Tasks
 
 - [ ] 1. Создать публичный репозиторий с названием **lab07** на сервисе **GitHub**
-- [ ] 2. Сгенирировать токен для доступа к сервису **GitHub** с правами **repo**
-- [ ] 3. Выполнить инструкцию учебного материала
-- [ ] 4. Ознакомиться со ссылками учебного материала
-- [ ] 5. Составить отчет и отправить ссылку личным сообщением в **Slack**
+- [ ] 2. Выполнить инструкцию учебного материала
+- [ ] 3. Ознакомиться со ссылками учебного материала
+- [ ] 4. Составить отчет и отправить ссылку личным сообщением в **Slack**
 
 ## Tutorial
 
 ```ShellSession
 $ export GITHUB_USERNAME=<имя_пользователя>
-$ export GITHUB_TOKEN=<сгенирированный_токен>
 $ export HUNTER_VERSION=<версия_пакетного_менеджера>
 ```
 
@@ -26,18 +24,6 @@ $ export HUNTER_VERSION=<версия_пакетного_менеджера>
 $ cd ${GITHUB_USERNAME}/workspace
 $ pushd .
 $ source scripts/activate
-$ go get github.com/github/hub
-```
-
-```ShellSession
-$ mkdir ~/.config
-$ cat > ~/.config/hub <<EOF
-github.com:
-- user: ${GITHUB_USERNAME}
-  oauth_token: ${GITHUB_TOKEN}
-  protocol: https
-EOF
-$ git config --global hub.protocol https
 ```
 
 ```ShellSession
