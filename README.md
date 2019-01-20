@@ -106,7 +106,7 @@ $ cat > sources/demo.cpp <<EOF
 
 #include <cstdlib>
 
-int main(int argc, char** argv)
+int main(int argc, char* argv[])
 {
   const char* log_path = std::getenv("LOG_PATH");
   if (log_path == nullptr)
