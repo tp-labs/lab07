@@ -231,7 +231,6 @@ $ gistup -m "lab${LAB_NUMBER}"
 
 ## Links
 
-- [hub](https://hub.github.com/)
 - [polly](https://github.com/ruslo/polly)
 
 ```
