@@ -72,7 +72,7 @@ hunter_add_version(
     VERSION
     "0.1.0.0"
     URL
-    "https://github.com/${GITHUB_USERNAME}/lab09/archive/v0.1.0.0.tar.gz"
+    "https://github.com/${GITHUB_USERNAME}/lab06/archive/v0.1.0.0.tar.gz"
     SHA1
     ${PRINT_SHA1}
 )
