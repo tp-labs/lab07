@@ -85,9 +85,9 @@ EOF
 ```ShellSession
 $ git add .
 $ git commit -m"added print package"
-$ git push ${GIHUB_USERNAME} package_print
+$ git push ${GITHUB_USERNAME}
 $ git tag ${HUNTER_VERSION}.1
-$ git push ${GIHUB_USERNAME} package_print --tags
+$ git push ${GITHUB_USERNAME} --tags
 $ cd ..
 ```
 
