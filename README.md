@@ -94,9 +94,9 @@ $ cd ..
 
 ```ShellSession
 $ export HUNTER_ROOT=`pwd`/hunter
-$ mkdir lab10 && cd lab10
+$ mkdir lab07 && cd lab07
 $ git init
-$ git remote add origin https://github.com/${GITHUB_USERNAME}/lab10
+$ git remote add origin https://github.com/${GITHUB_USERNAME}/lab07
 ```
 
 ```ShellSession
@@ -104,12 +104,19 @@ $ mkdir sources
 $ cat > sources/demo.cpp <<EOF
 #include <print.hpp>
 
+#include <cstdlib>
+
 int main(int argc, char** argv)
 {
+  const char* log_path = std::getenv("LOG_PATH");
+  if (log_path == nullptr)
+  {
+    std::cerr << "undefined environment variable: LOG_PATH" << std::endl; 
+  }
   std::string text;
   while(std::cin >> text)
   {
-    std::ofstream out("log.txt", std::ios_base::app);
+    std::ofstream out{log_path, std::ios_base::app};
     print(text, out);
     out << std::endl;
   }
