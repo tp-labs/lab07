@@ -37,10 +37,9 @@ $ rm -rf v0.1.0.0.tar.gz
 $ git clone https://github.com/ruslo/hunter projects/hunter
 $ cd projects/hunter && git checkout ${HUNTER_VERSION}
 $ git checkout -b pkg.print
-$ git remote show
+$ git remote -v
 $ hub fork
-$ git remote show
-$ git remote show ${GITHUB_USERNAME}
+$ git remote -v
 ```
 
 ```ShellSession
