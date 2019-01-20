@@ -17,7 +17,7 @@ $ open https://github.com/ruslo/hunter
 
 ```ShellSession
 $ export GITHUB_USERNAME=<имя_пользователя>
-$ export HUNTER_VERSION=<версия_пакетного_менеджера>
+$ export HUNTER_VERSION=<текущая_версия_пакетного_менеджера|v0.23.89>
 ```
 
 ```ShellSession
