@@ -1,4 +1,4 @@
-## Laboratory work X
+## Laboratory work VII
 
 Данная лабораторная работа посвещена изучению систем управления пакетами на примере **Hunter**
 
@@ -8,7 +8,7 @@ $ open https://github.com/ruslo/hunter
 
 ## Tasks
 
-- [ ] 1. Создать публичный репозиторий с названием **lab10** на сервисе **GitHub**
+- [ ] 1. Создать публичный репозиторий с названием **lab07** на сервисе **GitHub**
 - [ ] 2. Сгенирировать токен для доступа к сервису **GitHub** с правами **repo**
 - [ ] 3. Выполнить инструкцию учебного материала
 - [ ] 4. Ознакомиться со ссылками учебного материала
@@ -41,7 +41,7 @@ $ git config --global hub.protocol https
 ```
 
 ```ShellSession
-$ wget https://github.com/${GITHUB_USERNAME}/lab09/archive/v0.1.0.0.tar.gz
+$ wget https://github.com/${GITHUB_USERNAME}/lab06/archive/v0.1.0.0.tar.gz
 $ export PRINT_SHA1=`openssl sha1 v0.1.0.0.tar.gz | cut -d'=' -f2 | cut -c2-41`
 $ echo $PRINT_SHA1
 $ rm -rf v0.1.0.0.tar.gz
@@ -118,13 +118,15 @@ $ mkdir sources
 $ cat > sources/demo.cpp <<EOF
 #include <print.hpp>
 
-int main(int argc, char** argv) {
-	std::string text;
-	while(std::cin >> text) {
-		std::ofstream out("log.txt", std::ios_base::app);
-		print(text, out);
-		out << std::endl;
-	}
+int main(int argc, char** argv)
+{
+  std::string text;
+  while(std::cin >> text)
+  {
+    std::ofstream out("log.txt", std::ios_base::app);
+    print(text, out);
+    out << std::endl;
+  }
 }
 EOF
 ```
@@ -140,7 +142,7 @@ $ rm *.tar.gz
 
 ```ShellSession
 $ cat > CMakeLists.txt <<EOF
-cmake_minimum_required(VERSION 3.0)
+cmake_minimum_required(VERSION 3.4)
 
 set(CMAKE_CXX_STANDARD 11)
 EOF
@@ -158,7 +160,7 @@ $ cat >> CMakeLists.txt <<EOF
 
 include(cmake/HunterGate.cmake)
 
-HunterGate(
+huntergate(
     URL "https://github.com/${GITHUB_USERNAME}/hunter/archive/${HUNTER_VERSION}.1.tar.gz"
     SHA1 "${HUNTER_SHA1}"
 )
@@ -190,7 +192,7 @@ EOF
 
 ```ShellSession
 $ cat > README.md <<EOF
-[![Build Status](https://travis-ci.org/${GITHUB_USERNAME}/lab10.svg?branch=master)](https://travis-ci.org/${GITHUB_USERNAME}/lab10)
+[![Build Status](https://travis-ci.org/${GITHUB_USERNAME}/lab07.svg?branch=master)](https://travis-ci.org/${GITHUB_USERNAME}/lab07)
 the demo application redirects data from stdin to a file **log.txt** using a package **print**.
 EOF
 ```
@@ -232,7 +234,7 @@ $ cat log.txt
 
 ```ShellSession
 $ popd
-$ export LAB_NUMBER=10
+$ export LAB_NUMBER=07
 $ git clone https://github.com/tp-labs/lab${LAB_NUMBER} tasks/lab${LAB_NUMBER}
 $ mkdir reports/lab${LAB_NUMBER}
 $ cp tasks/lab${LAB_NUMBER}/README.md reports/lab${LAB_NUMBER}/REPORT.md
@@ -245,8 +247,7 @@ $ gistup -m "lab${LAB_NUMBER}"
 
 - [hub](https://hub.github.com/)
 - [polly](https://github.com/ruslo/polly)
-- [conan](https://conan.io)
 
 ```
-Copyright (c) 2017 Братья Вершинины
+Copyright (c) 2015-2019 The ISC Authors
 ```
