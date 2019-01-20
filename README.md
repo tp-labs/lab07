@@ -113,7 +113,7 @@ int main(int argc, char* argv[])
     std::cerr << "undefined environment variable: LOG_PATH" << std::endl;
   }
   std::string text;
-  while(std::cin >> text)
+  while (std::cin >> text)
   {
     std::ofstream out{log_path, std::ios_base::app};
     print(text, out);
