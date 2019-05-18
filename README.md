@@ -17,7 +17,6 @@ $ open https://github.com/ruslo/hunter
 
 ```ShellSession
 $ export GITHUB_USERNAME=<имя_пользователя>
-$ export HUNTER_VERSION=<текущая_версия_пакетного_менеджера|v0.23.89>
 ```
 
 ```ShellSession
@@ -27,196 +26,67 @@ $ source scripts/activate
 ```
 
 ```ShellSession
-$ wget https://github.com/${GITHUB_USERNAME}/lab06/archive/v0.1.0.0.tar.gz
-$ export PRINT_SHA1=`openssl sha1 v0.1.0.0.tar.gz | cut -d'=' -f2 | cut -c2-41`
-$ echo $PRINT_SHA1
-$ rm -rf v0.1.0.0.tar.gz
-```
-
-```ShellSession
-$ git clone https://github.com/ruslo/hunter projects/hunter
-$ cd projects/hunter && git checkout ${HUNTER_VERSION}
-$ git checkout -b pkg.print
-$ git remote -v
-$ hub fork
-$ git remote -v
-```
-
-```ShellSession
-$ mkdir cmake/projects/print
-$ cat > cmake/projects/print/hunter.cmake <<EOF
-include(hunter_add_version)
-include(hunter_cacheable)
-include(hunter_cmake_args)
-include(hunter_download)
-include(hunter_pick_scheme)
-
-hunter_add_version(
-    PACKAGE_NAME
-    print
-    VERSION
-    "0.1.0.0"
-    URL
-    "https://github.com/${GITHUB_USERNAME}/lab06/archive/v0.1.0.0.tar.gz"
-    SHA1
-    ${PRINT_SHA1}
-)
-
-hunter_pick_scheme(DEFAULT url_sha1_cmake)
-
-hunter_cmake_args(
-    print
-    CMAKE_ARGS
-    BUILD_EXAMPLES=NO
-    BUILD_TESTS=NO
-)
-hunter_cacheable(print)
-hunter_download(PACKAGE_NAME print)
-EOF
-```
-
-```ShellSession
-$ cat >> cmake/configs/default.cmake <<EOF
-hunter_default_version(print VERSION 0.1.0.0)
-EOF
-
-```
-
-```ShellSession
-$ git add .
-$ git commit -m"added print package"
-$ git push ${GITHUB_USERNAME}
-$ git tag ${HUNTER_VERSION}.1
-$ git push ${GITHUB_USERNAME} --tags
-$ cd ..
-```
-
-```ShellSession
-$ export HUNTER_ROOT=`pwd`/hunter
-$ mkdir lab07 && cd lab07
-$ git init
+$ git clone https://github.com/${GITHUB_USERNAME}/lab06 projects/lab07
+$ cd projects/lab07
+$ git remote remove origin
 $ git remote add origin https://github.com/${GITHUB_USERNAME}/lab07
 ```
 
 ```ShellSession
-$ mkdir sources
-$ cat > sources/demo.cpp <<EOF
-#include <print.hpp>
+$ wget https://github.com/hunter-packages/gate/archive/v0.9.0.tar.gz -O /tmp/gate.tar.gz
+$ tar -xf gate.tar.gz
+$ mkdir -p cmake
+$ mv gate-0.9.0/cmake/HunterGate.cmake cmake
+$ rm -rf gate-0.9.0
+$ gsed -i '/cmake_minimum_required(VERSION 3.4)/a\
 
-#include <cstdlib>
-
-int main(int argc, char* argv[])
-{
-  const char* log_path = std::getenv("LOG_PATH");
-  if (log_path == nullptr)
-  {
-    std::cerr << "undefined environment variable: LOG_PATH" << std::endl;
-  }
-  std::string text;
-  while (std::cin >> text)
-  {
-    std::ofstream out{log_path, std::ios_base::app};
-    print(text, out);
-    out << std::endl;
-  }
-}
-EOF
-```
-
-```ShellSession
-$ mkdir tools
-$ git submodule add https://github.com/hunter-packages/gate tools/gate
-```
-
-```ShellSession
-$ cat > CMakeLists.txt <<EOF
-cmake_minimum_required(VERSION 3.4)
-
-set(CMAKE_CXX_STANDARD 11)
-EOF
-```
-
-```ShellSession
-$ wget https://github.com/${GITHUB_USERNAME}/hunter/archive/${HUNTER_VERSION}.1.tar.gz
-$ export HUNTER_SHA1=`openssl sha1 ${HUNTER_VERSION}.1.tar.gz | cut -d'=' -f2 | cut -c2-41`
-$ echo ${HUNTER_SHA1}
-$ rm -rf ${HUNTER_VERSION}.1.tar.gz
-```
-
-```ShellSession
-$ cat >> CMakeLists.txt <<EOF
-
-include(tools/gate/cmake/HunterGate.cmake)
-
+include("cmake/HunterGate.cmake")
 huntergate(
-    URL "https://github.com/${GITHUB_USERNAME}/hunter/archive/${HUNTER_VERSION}.1.tar.gz"
-    SHA1 "${HUNTER_SHA1}"
+  URL "https://github.com/ruslo/hunter/archive/v0.23.83.tar.gz"
+  SHA1 "12dec078717539eb7b03e6d2a17797cba9be9ba9"
 )
+' CMakeLists.txt
+```
+
+```ShellSession
+$ git rm -rf third-party/gtest
+$ gsed -i '/set(PRINT_VERSION_STRING "v\${PRINT_VERSION}")/a\
+
+hunter_add_package(GTest)
+find_package(GTest CONFIG REQUIRED)
+' CMakeLists.txt
+$ gsed -i 's/add_subdirectory(third-party/gtest)//' CMakeLists.txt
+$ gsed -i 's/gtest_main/GTest::main/' CMakeLists.txt
+```
+
+```ShellSession
+$ cmake -H. -B_builds
+$ cmake --build _builds
+$ cmake --build _builds --target test
+$ ls -la $HOME/.hunter
+```
+
+```ShellSession
+$ git clone https://github.com/ruslo/hunter $HOME/projects/hunter
+$ export HUNTER_ROOT=$HOME/projects/hunter
+$ rm -rf _builds
+$ cmake -H. -B_builds
+$ cmake --build _builds
+$ cmake --build _builds --target test
+```
+
+```ShellSession
+$ cat $HUNTER_ROOT/cmake/configs/default.cmake | grep Gtest
+$ cat $HUNTER_ROOT/cmake/projects/GTest/hunter.cmake
+$ mkdir cmake/Hunter
+$ cat > cmake/Hunter/config.cmake <<EOF
+hunter_config(GTest VERSION 1.7.0-hunter-9)
 EOF
 ```
 
 ```ShellSession
-$ cat >> CMakeLists.txt <<EOF
-
-project(demo)
-
-hunter_add_package(print)
-find_package(print)
-
-add_executable(demo \${CMAKE_CURRENT_SOURCE_DIR}/sources/demo.cpp)
-target_link_libraries(demo print)
-
-install(TARGETS demo RUNTIME DESTINATION bin)
-EOF
-```
-
-```ShellSession
-$ cat > .gitignore <<EOF
-*build*/
-*install*/
-*.swp
-EOF
-```
-
-```ShellSession
-$ cat > README.md <<EOF
-[![Build Status](https://travis-ci.org/${GITHUB_USERNAME}/lab07.svg?branch=master)](https://travis-ci.org/${GITHUB_USERNAME}/lab07)
-the demo application redirects data from stdin to a file **log.txt** using a package **print**.
-EOF
-```
-
-```ShellSession
-$ cat > .travis.yml <<EOF
-language: cpp
-
-script:
-- cmake -H. -B_build
-- cmake --build _build
-EOF
-```
-
-```ShellSession
-$ travis lint
-```
-
-```ShellSession
-$ git add .
-$ git commit -m"first commit"
-$ git push origin master
-```
-
-```ShellSession
-$ travis login --auto
-$ travis enable
-```
-
-```ShellSession
-$ cmake -H. -B_build -DCMAKE_INSTALL_PREFIX=_install
-$ cmake --build _build --target install
-$ mkdir artifacts && cd artifacts
-$ export LOG_PATH=log.txt
-$ echo "text1 text2 text3" | ../_install/bin/demo
-$ cat log.txt
+$ git submodule add github.com/ruslo/polly tools/polly
+$ tools/polly/bin/polly.py --test
 ```
 
 ## Report
@@ -232,9 +102,16 @@ $ edit REPORT.md
 $ gistup -m "lab${LAB_NUMBER}"
 ```
 
+## Homework
+
+### Задание
+1. Создайте cвой hunter-пакет.
+
 ## Links
 
-- [polly](https://github.com/ruslo/polly)
+- [Create Hunter package](https://docs.hunter.sh/en/latest/creating-new/create.html)
+- [Custom Hunter config](https://github.com/ruslo/hunter/wiki/example.custom.config.id)
+- [Polly](https://github.com/ruslo/polly)
 
 ```
 Copyright (c) 2015-2019 The ISC Authors
