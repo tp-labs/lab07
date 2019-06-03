@@ -34,7 +34,7 @@ $ git remote add origin https://github.com/${GITHUB_USERNAME}/lab07
 
 ```ShellSession
 $ wget https://github.com/hunter-packages/gate/archive/v0.9.0.tar.gz -O /tmp/gate.tar.gz
-$ tar -xf gate.tar.gz
+$ tar -xf /tmp/gate.tar.gz
 $ mkdir -p cmake
 $ mv gate-0.9.0/cmake/HunterGate.cmake cmake
 $ rm -rf gate-0.9.0
@@ -60,7 +60,7 @@ $ gsed -i 's/gtest_main/GTest::main/' CMakeLists.txt
 ```
 
 ```ShellSession
-$ cmake -H. -B_builds
+$ cmake -H. -B_builds -DBUILD_TESTS=ON
 $ cmake --build _builds
 $ cmake --build _builds --target test
 $ ls -la $HOME/.hunter
@@ -70,13 +70,13 @@ $ ls -la $HOME/.hunter
 $ git clone https://github.com/ruslo/hunter $HOME/projects/hunter
 $ export HUNTER_ROOT=$HOME/projects/hunter
 $ rm -rf _builds
-$ cmake -H. -B_builds
+$ cmake -H. -B_builds -DBUILD_TESTS=ON
 $ cmake --build _builds
 $ cmake --build _builds --target test
 ```
 
 ```ShellSession
-$ cat $HUNTER_ROOT/cmake/configs/default.cmake | grep Gtest
+$ cat $HUNTER_ROOT/cmake/configs/default.cmake | grep GTest
 $ cat $HUNTER_ROOT/cmake/projects/GTest/hunter.cmake
 $ mkdir cmake/Hunter
 $ cat > cmake/Hunter/config.cmake <<EOF
