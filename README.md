@@ -114,5 +114,5 @@ $ gist REPORT.md
 - [Polly](https://github.com/ruslo/polly)
 
 ```
-Copyright (c) 2015-2019 The ISC Authors
+Copyright (c) 2015-2020 The ISC Authors
 ```
