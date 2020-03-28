@@ -2,7 +2,7 @@
 
 Данная лабораторная работа посвещена изучению систем управления пакетами на примере **Hunter**
 
-```ShellSession
+```sh
 $ open https://github.com/ruslo/hunter
 ```
 
@@ -15,24 +15,24 @@ $ open https://github.com/ruslo/hunter
 
 ## Tutorial
 
-```ShellSession
+```sh
 $ export GITHUB_USERNAME=<имя_пользователя>
 ```
 
-```ShellSession
+```sh
 $ cd ${GITHUB_USERNAME}/workspace
 $ pushd .
 $ source scripts/activate
 ```
 
-```ShellSession
+```sh
 $ git clone https://github.com/${GITHUB_USERNAME}/lab06 projects/lab07
 $ cd projects/lab07
 $ git remote remove origin
 $ git remote add origin https://github.com/${GITHUB_USERNAME}/lab07
 ```
 
-```ShellSession
+```sh
 $ wget https://github.com/hunter-packages/gate/archive/v0.9.0.tar.gz -O /tmp/gate.tar.gz
 $ tar -xf /tmp/gate.tar.gz
 $ mkdir -p cmake
@@ -48,7 +48,7 @@ huntergate(
 ' CMakeLists.txt
 ```
 
-```ShellSession
+```sh
 $ git rm -rf third-party/gtest
 $ gsed -i '/set(PRINT_VERSION_STRING "v\${PRINT_VERSION}")/a\
 
@@ -59,14 +59,14 @@ $ gsed -i 's/add_subdirectory(third-party/gtest)//' CMakeLists.txt
 $ gsed -i 's/gtest_main/GTest::main/' CMakeLists.txt
 ```
 
-```ShellSession
+```sh
 $ cmake -H. -B_builds -DBUILD_TESTS=ON
 $ cmake --build _builds
 $ cmake --build _builds --target test
 $ ls -la $HOME/.hunter
 ```
 
-```ShellSession
+```sh
 $ git clone https://github.com/ruslo/hunter $HOME/projects/hunter
 $ export HUNTER_ROOT=$HOME/projects/hunter
 $ rm -rf _builds
@@ -75,7 +75,7 @@ $ cmake --build _builds
 $ cmake --build _builds --target test
 ```
 
-```ShellSession
+```sh
 $ cat $HUNTER_ROOT/cmake/configs/default.cmake | grep GTest
 $ cat $HUNTER_ROOT/cmake/projects/GTest/hunter.cmake
 $ mkdir cmake/Hunter
@@ -84,14 +84,14 @@ hunter_config(GTest VERSION 1.7.0-hunter-9)
 EOF
 ```
 
-```ShellSession
+```sh
 $ git submodule add github.com/ruslo/polly tools/polly
 $ tools/polly/bin/polly.py --test
 ```
 
 ## Report
 
-```ShellSession
+```sh
 $ popd
 $ export LAB_NUMBER=07
 $ git clone https://github.com/tp-labs/lab${LAB_NUMBER} tasks/lab${LAB_NUMBER}
