@@ -17,6 +17,7 @@ $ open https://github.com/ruslo/hunter
 
 ```sh
 $ export GITHUB_USERNAME=<имя_пользователя>
+$ alias gsed=sed
 ```
 
 ```sh
@@ -64,7 +65,7 @@ $ ls -la $HOME/.hunter
 ```
 
 ```sh
-$ git clone https://github.com/ruslo/hunter $HOME/projects/hunter
+$ git clone https://github.com/cpp-pm/hunter $HOME/projects/hunter
 $ export HUNTER_ROOT=$HOME/projects/hunter
 $ rm -rf _builds
 $ cmake -H. -B_builds -DBUILD_TESTS=ON
@@ -79,6 +80,7 @@ $ mkdir cmake/Hunter
 $ cat > cmake/Hunter/config.cmake <<EOF
 hunter_config(GTest VERSION 1.7.0-hunter-9)
 EOF
+# add LOCAL in HunterGate function
 ```
 
 ```sh
@@ -94,6 +96,7 @@ int main(int argc, char* argv[])
   if (log_path == nullptr)
   {
     std::cerr << "undefined environment variable: LOG_PATH" << std::endl;
+    return 1;
   }
   std::string text;
   while (std::cin >> text)
@@ -114,10 +117,11 @@ install(TARGETS demo RUNTIME DESTINATION bin)
 ```
 
 ```sh
-$ git submodule add github.com/ruslo/polly tools/polly
+$ mkdir tools
+$ git submodule add https://github.com/ruslo/polly tools/polly
 $ tools/polly/bin/polly.py --test
 $ tools/polly/bin/polly.py --install
-$ tools/polly/bin/polly.py --toolchain clang-fpic
+$ tools/polly/bin/polly.py --toolchain clang-cxx14
 ```
 
 ## Report
