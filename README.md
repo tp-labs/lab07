@@ -82,8 +82,42 @@ EOF
 ```
 
 ```sh
+$ mkdir demo
+$ cat > demo/main.cpp <<EOF
+#include <print.hpp>
+
+#include <cstdlib>
+
+int main(int argc, char* argv[])
+{
+  const char* log_path = std::getenv("LOG_PATH");
+  if (log_path == nullptr)
+  {
+    std::cerr << "undefined environment variable: LOG_PATH" << std::endl;
+  }
+  std::string text;
+  while (std::cin >> text)
+  {
+    std::ofstream out{log_path, std::ios_base::app};
+    print(text, out);
+    out << std::endl;
+  }
+}
+EOF
+
+$ gsed -i '/endif()/a\
+
+add_executable(demo ${CMAKE_CURRENT_SOURCE_DIR}/demo/main.cpp)
+target_link_libraries(demo print)
+install(TARGETS demo RUNTIME DESTINATION bin)
+' CMakeLists.txt
+```
+
+```sh
 $ git submodule add github.com/ruslo/polly tools/polly
 $ tools/polly/bin/polly.py --test
+$ tools/polly/bin/polly.py --install
+$ tools/polly/bin/polly.py --toolchain clang-fpic
 ```
 
 ## Report
