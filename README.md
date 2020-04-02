@@ -33,17 +33,14 @@ $ git remote add origin https://github.com/${GITHUB_USERNAME}/lab07
 ```
 
 ```sh
-$ wget https://github.com/hunter-packages/gate/archive/v0.9.0.tar.gz -O /tmp/gate.tar.gz
-$ tar -xf /tmp/gate.tar.gz
 $ mkdir -p cmake
-$ mv gate-0.9.0/cmake/HunterGate.cmake cmake
-$ rm -rf gate-0.9.0
+$ wget https://raw.githubusercontent.com/cpp-pm/gate/master/cmake/HunterGate.cmake -O cmake/HunterGate.cmake
 $ gsed -i '/cmake_minimum_required(VERSION 3.4)/a\
 
 include("cmake/HunterGate.cmake")
-huntergate(
-  URL "https://github.com/ruslo/hunter/archive/v0.23.83.tar.gz"
-  SHA1 "12dec078717539eb7b03e6d2a17797cba9be9ba9"
+HunterGate(
+    URL "https://github.com/cpp-pm/hunter/archive/v0.23.251.tar.gz"
+    SHA1 "5659b15dc0884d4b03dbd95710e6a1fa0fc3258d"
 )
 ' CMakeLists.txt
 ```
