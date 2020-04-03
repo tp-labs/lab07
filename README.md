@@ -54,7 +54,7 @@ hunter_add_package(GTest)
 find_package(GTest CONFIG REQUIRED)
 ' CMakeLists.txt
 $ gsed -i 's/add_subdirectory(third-party/gtest)//' CMakeLists.txt
-$ gsed -i 's/gtest_main/GTest::main/' CMakeLists.txt
+$ gsed -i 's/gtest_main/GTest::gtest_main/' CMakeLists.txt
 ```
 
 ```sh
