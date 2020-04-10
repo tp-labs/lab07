@@ -1,5 +1,7 @@
 ## Laboratory work VII
 
+[![IMAGE ALT TEXT HERE](https://raw.githubusercontent.com/tp-labs/lab07/master/preview.png)](https://yandex.ru/efir/?stream_id=vDHLoKtKoa3o)
+
 Данная лабораторная работа посвещена изучению систем управления пакетами на примере **Hunter**
 
 ```sh
