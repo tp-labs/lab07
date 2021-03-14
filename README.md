@@ -1,7 +1,5 @@
 ## Laboratory work VII
 
-<a href="https://yandex.ru/efir/?stream_id=vDHLoKtKoa3o"><img src="https://raw.githubusercontent.com/tp-labs/lab07/master/preview.png" width="640"/></a>
-
 Данная лабораторная работа посвещена изучению систем управления пакетами на примере **Hunter**
 
 ```sh
@@ -151,5 +149,5 @@ $ gist REPORT.md
 - [Polly](https://github.com/ruslo/polly)
 
 ```
-Copyright (c) 2015-2020 The ISC Authors
+Copyright (c) 2015-2021 The ISC Authors
 ```
